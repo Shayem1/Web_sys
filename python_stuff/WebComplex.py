@@ -6,6 +6,7 @@ import customtkinter
 from selenium import webdriver
 import time
 import sys
+import os
 
 
 # closes the server
@@ -37,19 +38,33 @@ def handle_client(connectionSocket, addr):
 
         # Process the requested file
         filename = message.split()[1]
+        filename = filename.replace("\\", "/")
+        filename = filename[1:]
+        filename = os.path.normpath(filename)
+
+        if filename.endswith(".html"):
+            content_type = "text/html"  # Set content-type for HTML
+        elif filename.endswith(".css"):
+            content_type = "text/css"  # Set content-type for CSS
+        elif filename.endswith(".jpg") or filename.endswith(".jpeg"):
+            content_type = "image/jpeg"  # Set content-type for JPG/JPEG
+        elif filename.endswith(".png"):
+            content_type = "image/png"  # Set content-type for PNG
+        else:
+            content_type = "text/plain"  # Default content-type for unknown files
+
         try:
-            with open("Webpages/"+filename[1:], 'r') as f:
+            with open("Webpages/"+filename, 'rb') as f:
                 outputdata = f.read()
 
-            responseHeader = "HTTP/1.1 200 OK\r\n\r\n"      #document sent correctly
+            responseHeader = f"HTTP/1.1 200 OK\r\nContent-Type: {content_type}\r\n\r\n"      #document sent correctly
             connectionSocket.send(responseHeader.encode())  #sends encoded response header
 
-            for char in outputdata:
-                connectionSocket.send(char.encode())  # Send file content to webpage
+            connectionSocket.send(outputdata)  # Send the file content to the webpage (already in bytes)
 
         except IOError:
             # Handle file not found and sends encoded server response to webpage
-            responseHeader = "HTTP/1.1 404 Not Found\r\n\r\n"
+            responseHeader = f"HTTP/1.1 200 OK\r\nContent-Type: {content_type}\r\n\r\n"
             responseBody = "<html><head></head><body><h1>404 Not Found</h1></body></html>"
             connectionSocket.send(responseHeader.encode())
             connectionSocket.send(responseBody.encode())

@@ -15,10 +15,12 @@
   
   /* Header Styles */
   header {
-    background-image: linear-gradient(to right, #9feb59, #2b5ae7);;
+    background-image: linear-gradient(to right, #f1611e, #cac6c6);
     color: rgb(0, 0, 0);
-    padding: 20px;
-    text-align: center;
+    padding: 10px;
+    text-align: left;
+    font-family: Arial, sans-serif;
+    font-size: 40px;
   }
   
   /* Navigation Area Styles */
@@ -31,7 +33,7 @@
   nav ul {
     list-style-type: none;
     display: flex;
-    justify-content: center;
+    justify-content: left;
   }
   
   nav ul li {
@@ -41,7 +43,7 @@
   nav ul li a {
     color: white;
     text-decoration: none;
-    padding: 5px 10px;
+    padding: 5px;
   }
   
   nav ul li a:hover {
