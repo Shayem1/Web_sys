@@ -98,7 +98,7 @@ def start_server():
     print("This server runs on localHost and will not allow other devices on the netowrk to connect\n")
     serverSocket = socket(AF_INET, SOCK_STREAM)
     serverPort = 4305  # Port number
-    serverSocket.bind(('localhost', serverPort)) 
+    serverSocket.bind(('', serverPort)) 
     
     #change to ("0.0.0.0", serverPort) for all connections (firewall/security threat)
     #you will also need to enable port forwarding using your router and public ip adress (not private ip adress asigned to your pc)
