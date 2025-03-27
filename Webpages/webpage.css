@@ -15,19 +15,51 @@
   
   /* Header Styles */
   header {
-    background-image: linear-gradient(to right, #f1611e, #cac6c6);
-    color: rgb(0, 0, 0);
-    padding: 10px;
+    background-image: linear-gradient(to right, #ee682a, #643805b3  );
+    color: rgb(228, 228, 228);
+    padding: 0px;
     text-align: left;
-    font-family: Arial, sans-serif;
-    font-size: 40px;
+    font-family: Garamond, Arial, sans-serif;
+    font-size: 50px;
+    line-height: 1;
+
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between;
+  }
+
+    /* Background Banner for Text */
+  .banner-text {
+    background-image: linear-gradient(to right, #643805b3, #925208b3 );
+    padding: 5px 10px;
+    display: inline-block;
+
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+
+  }
+
+    /* Image Container */
+  .header-images {
+    display: flex; /* Ensures images are side by side */
+  }
+
+  .header-image {
+    max-height: 130px; /* Adjust as needed */
+    width: auto;
+    display: block;
+
   }
   
   /* Navigation Area Styles */
   nav {
-    background-color: #444;
+    background-color: #525252;
     color: white;
-    padding: 15px;
+    padding: 8px;
+    line-height: 1;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1)
   }
   
   nav ul {
@@ -47,7 +79,7 @@
   }
   
   nav ul li a:hover {
-    background-color: #555;
+    background-color: #363636;
     border-radius: 5px;
   }
   
@@ -80,9 +112,10 @@
     background-color: #333;
     color: white;
     text-align: left;
-    padding: 10px;
+    padding: 6px;
     position: relative;
     bottom: 0;
     width: 100%;
     font-size: 12px;
+    line-height: 1;
   }
