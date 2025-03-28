@@ -41,7 +41,7 @@ def handle_client(connectionSocket, addr):
         filename = filename.replace("\\", "/")
         filename = filename[1:]
         filename = os.path.normpath(filename)
-
+        print(filename)
         if filename.endswith(".html"):
             content_type = "text/html"  # Set content-type for HTML
         elif filename.endswith(".css"):
@@ -53,21 +53,38 @@ def handle_client(connectionSocket, addr):
         else:
             content_type = "text/plain"  # Default content-type for unknown files
 
-        try:
-            with open("Webpages/"+filename, 'rb') as f:
-                outputdata = f.read()
+        if content_type == "image/png" or content_type == "image/jpeg":
+            try:
+                with open("../images/"+filename, 'rb') as f:
+                    outputdata = f.read()
 
-            responseHeader = f"HTTP/1.1 200 OK\r\nContent-Type: {content_type}\r\n\r\n"      #document sent correctly
-            connectionSocket.send(responseHeader.encode())  #sends encoded response header
+                    responseHeader = f"HTTP/1.1 200 OK\r\nContent-Type: {content_type}\r\n\r\n"      #document sent correctly
+                    connectionSocket.send(responseHeader.encode())  #sends encoded response header
 
-            connectionSocket.send(outputdata)  # Send the file content to the webpage (already in bytes)
+                    connectionSocket.send(outputdata)  # Send the file content to the webpage (already in bytes)
 
-        except IOError:
-            # Handle file not found and sends encoded server response to webpage
-            responseHeader = f"HTTP/1.1 200 OK\r\nContent-Type: {content_type}\r\n\r\n"
-            responseBody = "<html><head></head><body><h1>404 Not Found</h1></body></html>"
-            connectionSocket.send(responseHeader.encode())
-            connectionSocket.send(responseBody.encode())
+            except IOError:
+                # Handle file not found and sends encoded server response to webpage
+                responseHeader = f"HTTP/1.1 200 OK\r\nContent-Type: {content_type}\r\n\r\n"
+                responseBody = "<html><head></head><body><h1>404 Not Found</h1></body></html>"
+                connectionSocket.send(responseHeader.encode())
+                connectionSocket.send(responseBody.encode())
+        else: 
+            try:
+                with open("Webpages/"+filename, 'rb') as f:
+                    outputdata = f.read()
+
+                responseHeader = f"HTTP/1.1 200 OK\r\nContent-Type: {content_type}\r\n\r\n"      #document sent correctly
+                connectionSocket.send(responseHeader.encode())  #sends encoded response header
+
+                connectionSocket.send(outputdata)  # Send the file content to the webpage (already in bytes)
+
+            except IOError:
+                # Handle file not found and sends encoded server response to webpage
+                responseHeader = f"HTTP/1.1 200 OK\r\nContent-Type: {content_type}\r\n\r\n"
+                responseBody = "<html><head></head><body><h1>404 Not Found</h1></body></html>"
+                connectionSocket.send(responseHeader.encode())
+                connectionSocket.send(responseBody.encode())
 
     #displays any errors to terminal which gets redirected to GUI
     except OSError as e:
@@ -150,7 +167,7 @@ def update_time():
 #if localHost is changed, the weblink needs to be altered. Likewise if HTML file is changed or port.
 def open_webpage():
     driver = webdriver.Chrome()
-    driver.get("http://localhost:4305/sev.html")
+    driver.get("http://localhost:4305/Home_page.html")
 
 #runs functions with threads to allow main program to not freeze
 def thread_offload():
